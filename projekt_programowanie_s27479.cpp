@@ -4,14 +4,16 @@
 using namespace std;
 
 void printY(char input, int size, int x, int move_y) {
-	CONSOLE_SCREEN_BUFFER_INFO csbi;// Pobranie wymiar體 bufora ekranu
+	CONSOLE_SCREEN_BUFFER_INFO csbi;// Pobranie wymiar贸w bufora ekranu
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    for (int i = 0; i < csbi.srWindow.Bottom; i++) {
+	
+    for (int i = 0; i < csbi.srWindow.Bottom; i++) {   //p臋tla rysujaca Y
         for (int j = 0; j < csbi.srWindow.Right; j++) {
-            if(i >= move_y && i < move_y + size ){
-                if(i - move_y < size/2 && j == x - (size/2 - (i - move_y)) && j >= x - size/2) cout << input;
-                else if(i - move_y < size/2 && j == x + (size/2 - (i - move_y)) && j <= x + size/2) cout << input;
-                else if(i - move_y >= size/2 && j == x && j >= x - size/2 && j <= x + size/2) cout << input;
+		
+            if(i >= move_y && i < move_y + size ){  // Je偶eli aktualna pozycja jest w obszarze rysowania litery
+                if(i - move_y < size/2 && j == x - (size/2 - (i - move_y)) && j >= x - size/2) cout << input;  // Rysowanie pierwszej po艂owy litery
+                else if(i - move_y < size/2 && j == x + (size/2 - (i - move_y)) && j <= x + size/2) cout << input;   // Rysowanie drugiej po艂owy litery
+                else if(i - move_y >= size/2 && j == x && j >= x - size/2 && j <= x + size/2) cout << input;   // Rysowanie trzeciej cz臋艣ci litery
                 else cout << " ";
             }
             else cout << " ";
@@ -34,18 +36,19 @@ int main() {
     		goto error;
 		}
 	system ("cls");
-    CONSOLE_SCREEN_BUFFER_INFO csbi;// Pobranie wymiar體 bufora ekranu
+    CONSOLE_SCREEN_BUFFER_INFO csbi;// Pobranie wymiar贸w bufora ekranu
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 
 
-    int x = csbi.srWindow.Right / 2;// Obliczenie wsp蟪rz阣nych 渞odka ekranu
+    int x = csbi.srWindow.Right / 2;// Obliczenie wsp贸鲁rz锚dnych 艙rodka ekranu
     int move_y = csbi.srWindow.Bottom / 2;
 
     while(true) {
     	system ("cls");
         printY(input, size, x, move_y);
         char key = getch();
-        if(key == '+') size++, move_y--;
+	    
+        if(key == '+') size++, move_y--;   // Obs艂uga ruch贸w litery 'Y'
         else if(key == '-') size--, move_y++;
         else if(key == 72) move_y--;
         else if(key == 80) move_y++;
